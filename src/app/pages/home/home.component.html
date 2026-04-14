@@ -1,0 +1,273 @@
+<!-- ═══════════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero__bg">
+    <div class="blob blob--1"></div>
+    <div class="blob blob--2"></div>
+    <div class="blob blob--3"></div>
+    <div class="hero__grid"></div>
+    <div class="hero__radial"></div>
+    <div id="hero-particles" class="hero__particles"></div>
+  </div>
+
+  <div class="hero__container" [class.hero__container--visible]="heroVisible()">
+    <!-- Left -->
+    <div class="hero__content">
+      <div class="hero__badge">
+        <span class="hero__badge-dot"></span>
+        100% Naturel &nbsp;·&nbsp; 100% Frais
+      </div>
+
+      <h1 class="hero__title">
+        La Nature<br>
+        <span class="text-gradient-anim">dans chaque</span><br>
+        <span class="hero__title-last">
+          gorgée<span class="hero__title-emoji">🍹</span>
+          <svg class="hero__underline" viewBox="0 0 240 8" preserveAspectRatio="none">
+            <path d="M0,4 Q60,0 120,4 Q180,8 240,4" stroke="url(#ul)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="ul" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#f59e0b"/>
+                <stop offset="100%" stop-color="#f97316"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </span>
+      </h1>
+
+      <p class="hero__desc">
+        FruitsNatur transforme les meilleurs fruits tropicaux en jus d'exception.
+        Trois marques, une passion : vous offrir le goût authentique de la nature.
+      </p>
+
+      <div class="hero__actions">
+        <a routerLink="/marques" class="btn-primary">
+          Découvrir nos marques
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+        <a routerLink="/fruits" class="btn-secondary">Nos fruits</a>
+      </div>
+
+      <div class="hero__badges">
+        @for (fruit of fruits().slice(0, 4); track fruit.id) {
+          <div class="fruit-badge">
+            <span>{{ fruit.emoji }}</span>
+            <span>{{ fruit.nom }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Right: marque card -->
+    <div class="hero__showcase">
+      <div class="hero__rings">
+        <div class="hero__ring hero__ring--1"></div>
+        <div class="hero__ring hero__ring--2"></div>
+        <div class="hero__ring hero__ring--3"></div>
+        <div class="hero__orbit"><div class="hero__orbit-dot"></div></div>
+      </div>
+
+      @for (marque of marques(); track marque.id; let i = $index) {
+        @if (i === activeMarque()) {
+          <div class="hero-card">
+            <div class="hero-card__img-wrap">
+              <img [src]="marque.thumbnail" [alt]="marque.nom" class="hero-card__img">
+              <div class="hero-card__overlay"></div>
+              <div class="hero-card__badge" [style.background]="marque.couleur + '30'" [style.color]="marque.couleur">
+                {{ marque.fruit }}
+              </div>
+              <div class="hero-card__info">
+                <span class="hero-card__emoji">{{ marque.emoji }}</span>
+                <h3 class="hero-card__name">{{ marque.nom }}</h3>
+                <p class="hero-card__slogan">{{ marque.slogan }}</p>
+              </div>
+            </div>
+            <a [routerLink]="['/marques', marque.id]" class="hero-card__cta"
+              [style.background]="'linear-gradient(135deg,' + marque.couleur + ',' + marque.couleur + 'bb)'">
+              Découvrir la marque →
+            </a>
+          </div>
+        }
+      }
+
+      <div class="hero__dots">
+        @for (m of marques(); track m.id; let i = $index) {
+          <button
+            class="hero__dot"
+            [style.background]="i === activeMarque() ? m.couleur : 'rgba(255,255,255,0.2)'"
+            [style.width]="i === activeMarque() ? '28px' : '8px'"
+            (click)="activeMarque.set(i)"
+            [attr.aria-label]="m.nom"
+          ></button>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__scroll">
+    <span>Défiler</span>
+    <div class="hero__scroll-mouse"><div class="hero__scroll-dot"></div></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     TICKER
+═══════════════════════════════════════════════════════ -->
+<div class="ticker">
+  <div class="ticker__track">
+    @for (item of ticker; track $index) {
+      <span class="ticker__item">{{ item }}</span>
+    }
+    @for (item of ticker; track $index) {
+      <span class="ticker__item">{{ item }}</span>
+    }
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     STATS
+═══════════════════════════════════════════════════════ -->
+<section id="stats-section" class="stats">
+  <div class="stats__container">
+    @for (stat of stats; track stat.label; let i = $index) {
+      <div class="stat-card" [class.stat-card--visible]="statsVisible()" [style.transition-delay]="(i * 120) + 'ms'">
+        <div class="stat-card__emoji">{{ stat.emoji }}</div>
+        <div class="stat-card__value">{{ stat.valeur }}<span class="stat-card__suffix">{{ stat.suffix }}</span></div>
+        <div class="stat-card__label">{{ stat.label }}</div>
+      </div>
+    }
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════
+     MARQUES
+═══════════════════════════════════════════════════════ -->
+<section class="section-marques">
+  <div class="section-marques__container">
+    <div class="section-header reveal">
+      <span class="section-header__eyebrow">Nos Créations</span>
+      <h2 class="section-header__title">
+        Trois Marques, <span class="text-gradient">Une Passion</span>
+      </h2>
+      <p class="section-header__desc">
+        Chaque marque raconte une histoire unique — un fruit, une saveur, une expérience inoubliable.
+      </p>
+    </div>
+
+    <div class="marques-grid">
+      @for (marque of marques(); track marque.id; let i = $index) {
+        <div class="marque-card" [style.--accent]="marque.couleur" [style.animation-delay]="(i * 150) + 'ms'">
+          <div class="marque-card__img-wrap">
+            <img [src]="marque.thumbnail" [alt]="marque.nom" class="marque-card__img">
+            <div class="marque-card__img-overlay"></div>
+            <div class="marque-card__emoji-badge">{{ marque.emoji }}</div>
+            <div class="marque-card__hover-cta">
+              <a [routerLink]="['/marques', marque.id]" class="marque-card__hover-btn">Voir la marque →</a>
+            </div>
+          </div>
+          <div class="marque-card__body">
+            <h3 class="marque-card__name">{{ marque.nom }}</h3>
+            <p class="marque-card__slogan" [style.color]="marque.couleur">{{ marque.slogan }}</p>
+            <p class="marque-card__desc">{{ marque.description }}</p>
+            <a [routerLink]="['/marques', marque.id]" class="marque-card__cta"
+              [style.background]="'linear-gradient(135deg,' + marque.couleur + ',' + marque.couleur + 'bb)'">
+              Découvrir
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════
+     FRUITS
+═══════════════════════════════════════════════════════ -->
+<section class="section-fruits">
+  <div class="section-fruits__container">
+    <div class="section-header reveal">
+      <span class="section-header__eyebrow">La Source</span>
+      <h2 class="section-header__title">
+        Nos Fruits <span class="text-gradient">Sélectionnés</span>
+      </h2>
+    </div>
+    <div class="fruits-grid">
+      @for (fruit of fruits(); track fruit.id; let i = $index) {
+        <a routerLink="/fruits" class="fruit-card"
+          [style.--fc]="fruit.couleur"
+          [style.animation-delay]="(i * 80) + 'ms'">
+          <span class="fruit-card__emoji">{{ fruit.emoji }}</span>
+          <span class="fruit-card__name">{{ fruit.nom }}</span>
+          <span class="fruit-card__saison">{{ fruit.saison }}</span>
+          <div class="fruit-card__bar"></div>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════
+     RÉALISATIONS
+═══════════════════════════════════════════════════════ -->
+<section class="section-realisations">
+  <div class="section-realisations__container">
+    <div class="section-header reveal">
+      <span class="section-header__eyebrow">Notre Parcours</span>
+      <h2 class="section-header__title">
+        Nos <span class="text-gradient">Réalisations</span>
+      </h2>
+      <p class="section-header__desc">
+        Des étapes clés qui témoignent de notre engagement pour la qualité et l'authenticité.
+      </p>
+    </div>
+    <div class="realisations-grid">
+      @for (real of realisations(); track real.id; let i = $index) {
+        <div class="real-card reveal" [style.transition-delay]="(i * 90) + 'ms'">
+          <div class="real-card__img-wrap">
+            <img [src]="real.image" [alt]="real.titre" class="real-card__img" loading="lazy">
+            <div class="real-card__overlay"></div>
+            <span class="real-card__tag">{{ real.categorie }}</span>
+          </div>
+          <div class="real-card__body">
+            <h3 class="real-card__title">{{ real.titre }}</h3>
+            <p class="real-card__desc">{{ real.description }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     CTA
+═══════════════════════════════════════════════════════ -->
+<section class="section-cta">
+  <div class="blob blob--cta1"></div>
+  <div class="blob blob--cta2"></div>
+  <div class="section-cta__container reveal">
+    <div class="section-cta__icon">🍹</div>
+    <h2 class="section-cta__title">
+      Prêt à goûter<br>
+      <span class="text-gradient-anim">l'authenticité ?</span>
+    </h2>
+    <p class="section-cta__desc">
+      Rejoignez des milliers de clients qui ont choisi la fraîcheur naturelle de FruitsNatur.
+    </p>
+    <div class="section-cta__actions">
+      <a routerLink="/marques" class="btn-primary">Voir nos marques</a>
+      <a routerLink="/contact" class="btn-secondary">Nous contacter</a>
+    </div>
+  </div>
+</section>

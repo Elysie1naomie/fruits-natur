@@ -1,0 +1,210 @@
+.contact-section {
+  padding: 5rem 1.5rem 7rem;
+  background: #030712;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+
+    @media (min-width: 1024px) { grid-template-columns: 1fr 1fr; }
+  }
+}
+
+// ── Infos ─────────────────────────────────────────────
+.contact-infos {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  &__title {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+  }
+
+  &__list { display: flex; flex-direction: column; gap: 0.75rem; }
+}
+
+.info-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: rgba(245,158,11,0.2);
+  }
+
+  &__icon {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    background: rgba(245,158,11,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  &__label {
+    color: rgba(107,114,128,1);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 2px;
+  }
+
+  &__value { color: #fff; font-weight: 500; font-size: 0.9rem; }
+}
+
+.contact-partner {
+  padding: 1.5rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(245,158,11,0.07), rgba(249,115,22,0.04));
+  border: 1px solid rgba(245,158,11,0.15);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.75rem;
+    font-size: 1.3rem;
+
+    h3 { color: #fff; font-weight: 700; font-size: 1rem; }
+  }
+
+  p { color: rgba(156,163,175,1); font-size: 0.875rem; line-height: 1.65; margin-bottom: 1rem; }
+
+  &__tags { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  &__tag {
+    padding: 4px 12px;
+    border-radius: 50px;
+    background: rgba(245,158,11,0.1);
+    color: #f59e0b;
+    border: 1px solid rgba(245,158,11,0.2);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+}
+
+// ── Form ──────────────────────────────────────────────
+.contact-form-wrap {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 24px;
+  padding: 2.5rem;
+
+  &__title {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 2rem;
+  }
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+
+    @media (min-width: 640px) { grid-template-columns: 1fr 1fr; }
+  }
+
+  &__submit {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &__label {
+    color: rgba(156,163,175,1);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  &__input {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: #fff;
+    font-size: 0.875rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+
+    &::placeholder { color: rgba(107,114,128,0.8); }
+
+    &:focus {
+      border-color: rgba(245,158,11,0.4);
+      background: rgba(245,158,11,0.04);
+      box-shadow: 0 0 0 3px rgba(245,158,11,0.08);
+    }
+
+    &--textarea { resize: none; }
+
+    option { background: #1f2937; color: #fff; }
+  }
+}
+
+// ── Success ───────────────────────────────────────────
+.contact-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  gap: 1rem;
+
+  &__icon {
+    font-size: 4rem;
+    animation: bounceIn 0.6s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  h3 { color: #fff; font-size: 1.75rem; font-weight: 900; }
+  p { color: rgba(156,163,175,1); }
+
+  &__reset {
+    margin-top: 0.5rem;
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 1px solid rgba(245,158,11,0.3);
+    color: #f59e0b;
+    background: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: none;
+    transition: background 0.25s ease;
+    &:hover { background: rgba(245,158,11,0.1); }
+  }
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}

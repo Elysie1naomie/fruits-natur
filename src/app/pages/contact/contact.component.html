@@ -1,0 +1,89 @@
+<!-- Hero -->
+<section class="page-hero">
+  <div class="blob blob--1"></div>
+  <div class="page-hero__container">
+    <span class="eyebrow">Parlons-nous</span>
+    <h1 class="page-hero__title"><span class="text-gradient">Contact</span></h1>
+    <p class="page-hero__desc">Une question, un partenariat, une commande ? On est là pour vous.</p>
+  </div>
+</section>
+
+<section class="contact-section">
+  <div class="contact-section__container">
+
+    <!-- Infos -->
+    <div class="contact-infos reveal-left">
+      <h2 class="contact-infos__title">Nos coordonnées</h2>
+      <div class="contact-infos__list">
+        @for (info of infos; track info.label; let i = $index) {
+          <div class="info-card reveal" [style.transition-delay]="(i * 80) + 'ms'">
+            <div class="info-card__icon">{{ info.emoji }}</div>
+            <div>
+              <p class="info-card__label">{{ info.label }}</p>
+              <p class="info-card__value">{{ info.valeur }}</p>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="contact-partner reveal">
+        <div class="contact-partner__header">
+          <span>🤝</span>
+          <h3>Partenariat & Distribution</h3>
+        </div>
+        <p>Vous souhaitez distribuer nos produits ? Contactez notre équipe commerciale pour discuter des opportunités.</p>
+        <div class="contact-partner__tags">
+          @for (tag of ['Grossiste', 'Détaillant', 'HoReCa']; track tag) {
+            <span class="contact-partner__tag">{{ tag }}</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="contact-form-wrap reveal-right">
+      @if (!sent()) {
+        <h2 class="contact-form-wrap__title">Envoyez-nous un message</h2>
+        <form class="contact-form" (ngSubmit)="submit()">
+          <div class="contact-form__row">
+            <div class="form-field">
+              <label class="form-field__label" for="nom">Nom</label>
+              <input id="nom" type="text" [(ngModel)]="form.nom" name="nom" required
+                class="form-field__input" placeholder="Votre nom">
+            </div>
+            <div class="form-field">
+              <label class="form-field__label" for="email">Email</label>
+              <input id="email" type="email" [(ngModel)]="form.email" name="email" required
+                class="form-field__input" placeholder="votre@email.com">
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-field__label" for="sujet">Sujet</label>
+            <select id="sujet" [(ngModel)]="form.sujet" name="sujet" class="form-field__input">
+              <option value="">Choisir un sujet</option>
+              @for (s of sujets; track s) {
+                <option [value]="s">{{ s }}</option>
+              }
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-field__label" for="message">Message</label>
+            <textarea id="message" [(ngModel)]="form.message" name="message" rows="5" required
+              class="form-field__input form-field__input--textarea" placeholder="Votre message..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary contact-form__submit">
+            Envoyer le message 🍹
+          </button>
+        </form>
+      } @else {
+        <div class="contact-success">
+          <div class="contact-success__icon">🎉</div>
+          <h3>Message envoyé !</h3>
+          <p>Nous vous répondrons dans les plus brefs délais.</p>
+          <button class="contact-success__reset" (click)="reset()">← Envoyer un autre message</button>
+        </div>
+      }
+    </div>
+
+  </div>
+</section>

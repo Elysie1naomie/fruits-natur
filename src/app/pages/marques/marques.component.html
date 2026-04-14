@@ -1,0 +1,103 @@
+<!-- Hero -->
+<section class="page-hero">
+  <div class="blob blob--1"></div>
+  <div class="blob blob--2"></div>
+  <div class="page-hero__container">
+    <span class="eyebrow">Nos Créations</span>
+    <h1 class="page-hero__title">Nos <span class="text-gradient">Marques</span></h1>
+    <p class="page-hero__desc">
+      Trois marques nées d'une même passion : transformer les meilleurs fruits en expériences gustatives inoubliables.
+    </p>
+    <!-- Quick nav pills -->
+    <div class="page-hero__pills">
+      @for (m of marques(); track m.id) {
+        <button class="pill" [style.--c]="m.couleur" (click)="scrollTo(m.id)">
+          {{ m.emoji }} {{ m.nom }}
+        </button>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Marques alternées -->
+<section class="marques-section">
+  <div class="marques-section__container">
+    @for (marque of marques(); track marque.id; let i = $index) {
+      <div class="marque-row" [id]="marque.id" [class.marque-row--reverse]="i % 2 !== 0">
+
+        <!-- Image -->
+        <div class="marque-row__media" [class.reveal-right]="i % 2 === 0" [class.reveal-left]="i % 2 !== 0">
+          <div class="marque-row__glow" [style.background]="marque.couleur"></div>
+          <div class="marque-row__img-wrap">
+            <img [src]="marque.thumbnail" [alt]="marque.nom" class="marque-row__img">
+            <div class="marque-row__img-overlay"></div>
+            <!-- Color bar -->
+            <div class="marque-row__color-bar" [style.background]="'linear-gradient(90deg,' + marque.couleur + ',transparent)'"></div>
+            <!-- Play btn -->
+            <button class="marque-row__play" (click)="selectedMarque.set(marque)" aria-label="Voir la vidéo">
+              <div class="marque-row__play-ring" [style.background]="marque.couleur"></div>
+              <div class="marque-row__play-btn">
+                <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="marque-row__content" [class.reveal-left]="i % 2 === 0" [class.reveal-right]="i % 2 !== 0">
+          <div class="marque-row__num" [style.color]="marque.couleur">0{{ i + 1 }}</div>
+          <div class="marque-row__header">
+            <span class="marque-row__emoji">{{ marque.emoji }}</span>
+            <div>
+              <h2 class="marque-row__name">{{ marque.nom }}</h2>
+              <p class="marque-row__slogan" [style.color]="marque.couleur">{{ marque.slogan }}</p>
+            </div>
+          </div>
+          <p class="marque-row__desc">{{ marque.description }}</p>
+          <div class="marque-row__tags">
+            @for (tag of ['100% Naturel', 'Pressé à froid', 'Sans additifs']; track tag) {
+              <span class="marque-row__tag" [style.color]="marque.couleur" [style.border-color]="marque.couleur + '40'" [style.background]="marque.couleur + '10'">
+                ✓ {{ tag }}
+              </span>
+            }
+          </div>
+          <div class="marque-row__actions">
+            <a [routerLink]="['/marques', marque.id]" class="btn-primary"
+              [style.background]="'linear-gradient(135deg,' + marque.couleur + ',' + marque.couleur + 'bb)'">
+              Voir la marque →
+            </a>
+            <button class="btn-outline" [style.color]="marque.couleur" [style.border-color]="marque.couleur + '50'"
+              (click)="selectedMarque.set(marque)">
+              ▶ Voir la vidéo
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Video modal -->
+@if (selectedMarque()) {
+  <div class="modal-backdrop" (click)="selectedMarque.set(null)">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal__header">
+        <div class="modal__title">
+          <span>{{ selectedMarque()!.emoji }}</span>
+          <div>
+            <p class="modal__name">{{ selectedMarque()!.nom }}</p>
+            <p class="modal__sub">Préparation du jus</p>
+          </div>
+        </div>
+        <button class="modal__close" (click)="selectedMarque.set(null)" aria-label="Fermer">✕</button>
+      </div>
+      <div class="modal__video">
+        <div class="modal__video-placeholder">
+          <span class="modal__video-emoji">{{ selectedMarque()!.emoji }}</span>
+          <p>Vidéo de préparation — {{ selectedMarque()!.nom }}</p>
+          <small>Remplacez par votre URL YouTube</small>
+        </div>
+      </div>
+    </div>
+  </div>
+}

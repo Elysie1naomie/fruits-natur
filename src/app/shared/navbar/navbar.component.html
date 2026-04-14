@@ -1,0 +1,57 @@
+<nav class="navbar" [class.navbar--scrolled]="scrolled()" [class.navbar--top]="!scrolled()">
+  <div class="navbar__container">
+
+    <!-- Logo -->
+    <a routerLink="/" class="navbar__logo" aria-label="FruitsNatur — Accueil">
+      <div class="navbar__logo-icon">
+        <span>🍹</span>
+      </div>
+      <div class="navbar__logo-text">
+        <span class="navbar__logo-name">Fruits<em>Natur</em></span>
+        <span class="navbar__logo-tagline">100% Naturel</span>
+      </div>
+    </a>
+
+    <!-- Desktop links -->
+    <div class="navbar__links">
+      @for (link of navLinks; track link.path) {
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="navbar__link--active"
+          [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+          class="navbar__link"
+        >
+          {{ link.label }}
+        </a>
+      }
+      <a routerLink="/contact" class="navbar__cta">Découvrir</a>
+    </div>
+
+    <!-- Burger -->
+    <button class="navbar__burger" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen()" aria-label="Menu">
+      <span [class.open]="menuOpen()"></span>
+      <span [class.open]="menuOpen()"></span>
+      <span [class.open]="menuOpen()"></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="navbar__mobile" [class.navbar__mobile--open]="menuOpen()">
+    @for (link of navLinks; track link.path; let i = $index) {
+      <a
+        [routerLink]="link.path"
+        routerLinkActive="navbar__mobile-link--active"
+        [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+        class="navbar__mobile-link"
+        [style.animation-delay]="menuOpen() ? (i * 60) + 'ms' : '0ms'"
+        (click)="menuOpen.set(false)"
+      >
+        <span class="navbar__mobile-emoji">{{ link.emoji }}</span>
+        {{ link.label }}
+      </a>
+    }
+    <a routerLink="/contact" class="navbar__mobile-cta" (click)="menuOpen.set(false)">
+      Découvrir nos marques →
+    </a>
+  </div>
+</nav>

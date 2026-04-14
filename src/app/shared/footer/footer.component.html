@@ -1,0 +1,58 @@
+<footer class="footer">
+  <!-- Top glow line -->
+  <div class="footer__glow-line"></div>
+
+  <div class="footer__container">
+    <div class="footer__grid">
+
+      <!-- Brand -->
+      <div class="footer__brand">
+        <a routerLink="/" class="footer__logo">
+          <div class="footer__logo-icon">🍹</div>
+          <span>Fruits<em>Natur</em></span>
+        </a>
+        <p class="footer__desc">
+          Des jus frais et savoureux préparés avec amour, à partir de fruits 100% naturels sélectionnés avec soin auprès de nos agriculteurs partenaires.
+        </p>
+        <div class="footer__socials">
+          @for (s of socials; track s.label) {
+            <a [href]="s.url" class="footer__social" [attr.aria-label]="s.label">
+              {{ s.icon }}
+            </a>
+          }
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="footer__col">
+        <h4 class="footer__col-title">Navigation</h4>
+        <ul class="footer__list">
+          @for (link of links; track link.path) {
+            <li>
+              <a [routerLink]="link.path" class="footer__list-link">{{ link.label }}</a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Marques -->
+      <div class="footer__col">
+        <h4 class="footer__col-title">Nos Marques</h4>
+        <ul class="footer__list">
+          @for (m of marques; track m.path) {
+            <li>
+              <a [routerLink]="m.path" class="footer__list-link">{{ m.label }}</a>
+            </li>
+          }
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer__bottom">
+      <p>© {{ year }} FruitsNatur. Tous droits réservés.</p>
+      <p>Fait avec 🍹 et passion naturelle</p>
+    </div>
+  </div>
+</footer>
